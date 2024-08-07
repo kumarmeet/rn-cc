@@ -4,8 +4,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 interface GlobalContextType {
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  user: any;
-  setUser: React.Dispatch<React.SetStateAction<any>>;
+  user: Object | null;
+  setUser: React.Dispatch<React.SetStateAction<Object>>;
   isLoading: boolean;
 }
 
@@ -42,7 +42,7 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [getCurrentUser]);
 
   return (
     <GlobalContext.Provider value={{
