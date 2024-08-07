@@ -5,16 +5,16 @@ export interface ICustomButtons {
   handlerPress: (e?: any) => void;
   containerStyles?: string;
   textStyles?: string;
-  isLoading?: boolean
+  isLoading?: boolean;
 }
 
 export interface IFormField {
-  title: string;
+  title?: string;
   value: string;
   placeholder: string;
   handleChangeText: (e?: any) => void;
-  keyboardType?: KeyboardTypeOptions
-  [key: string]: any
+  keyboardType?: KeyboardTypeOptions;
+  [key: string]: any;
 }
 
 interface IUserData {
@@ -25,5 +25,4 @@ interface IUserData {
 
 export type TFormData = {
   [T in keyof IUserData]?: IUserData[T];
-} & { email: string, password: string }
-
+} & { email: string; password: string };
