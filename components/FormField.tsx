@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
-
 import { icons } from "../constants";
 import { IFormField } from "./interface/props";
 
-const FormField = ({
+const FormField: React.FC<IFormField> = ({
   title,
   value,
   placeholder,
   handleChangeText,
   otherStyles,
+  keyboardType, // Add this line
   ...props
-}: IFormField) => {
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -26,6 +26,7 @@ const FormField = ({
           placeholderTextColor="#7B7B8B"
           onChangeText={handleChangeText}
           secureTextEntry={title === "Password" && !showPassword}
+          keyboardType={keyboardType}
           {...props}
         />
 
