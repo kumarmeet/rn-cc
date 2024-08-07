@@ -60,6 +60,8 @@ class AppWrite implements IAppWrite {
         username
       );
 
+      console.log(newAccount.$id);
+
       if (!newAccount) throw Error;
 
       const avatarUrl = this.avatars.getInitials(username);
@@ -74,6 +76,7 @@ class AppWrite implements IAppWrite {
           accountId: newAccount.$id,
           email: email,
           username: username,
+          password: password,
           avatar: avatarUrl,
         }
       );
@@ -87,7 +90,10 @@ class AppWrite implements IAppWrite {
   // Sign In
   async signIn({ email, password }: TFormData) {
     try {
-      const session = await this.account.createSession(email, password);
+      const session = await this.account.createEmailPasswordSession(
+        email,
+        password
+      );
 
       return session;
     } catch (error) {
@@ -110,6 +116,7 @@ class AppWrite implements IAppWrite {
   async getCurrentUser() {
     try {
       const currentAccount = await this.getAccount();
+
       if (!currentAccount) throw Error;
 
       const currentUser = await this.databases.listDocuments(
