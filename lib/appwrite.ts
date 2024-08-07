@@ -129,7 +129,7 @@ class AppWrite implements IAppWrite {
 
       return currentUser.documents[0];
     } catch (error) {
-      console.log(error);
+      console.log(1414, error);
       return null;
     }
   }

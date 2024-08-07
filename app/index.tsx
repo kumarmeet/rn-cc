@@ -9,7 +9,7 @@ import { useGlobalContext } from '@/context/global-provider'
 const App = () => {
   const { isLoading, isLoggedIn } = useGlobalContext()
 
-  if (!isLoading || isLoggedIn) {
+  if (!isLoading && isLoggedIn) {
     return <Redirect href="/home" />
   }
 
