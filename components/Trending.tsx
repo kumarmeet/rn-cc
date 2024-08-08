@@ -23,18 +23,16 @@ const zoomOut = {
 };
 
 
-const TrendingItem = ({ activeItem, item }: any) => {
-  const [play, setplay] = useState(false)
-
+const TrendingItem = ({ activeItem, item, onPlay, isPlaying }: any) => {
   return (
     <Animatable.View
       className="mr-5"
       animation={activeItem === item.$id ? zoomIn : zoomOut}
       duration={500}>
-      {play ?
+      {isPlaying ?
         <Video
           source={{ uri: item.video }}
-          className="w-52 h-72 rounded-[35px] mt-3 bg-white/10 border border-red-400"
+          className="w-52 h-72 rounded-[35px] mt-3 bg-white/10 border"
           resizeMode={ResizeMode.CONTAIN}
           useNativeControls
           shouldPlay
@@ -42,7 +40,7 @@ const TrendingItem = ({ activeItem, item }: any) => {
         />
         : <TouchableOpacity
           className="relative justify-center items-center"
-          activeOpacity={0.7} onPress={() => setplay(true)}>
+          activeOpacity={0.7} onPress={onPlay}>
           <ImageBackground
             className="my-5 w-52 h-72 overflow-hidden shadow-lg shadow-black/40 rounded-[34px]"
             source={{ uri: item.thumbnail }}
@@ -56,6 +54,11 @@ const TrendingItem = ({ activeItem, item }: any) => {
 
 const Trending = ({ posts }: { posts: any[] }) => {
   const [activeItem, setActiveItem] = useState(posts[0])
+  const [playingVideoId, setPlayingVideoId] = useState<null | string>(null);
+
+  const handlePlay = (videoId: string) => {
+    setPlayingVideoId(videoId);
+  };
 
   const viewableItemsChange = ({ viewableItems, changed }: any) => {
     if (viewableItems.length > 0) {
@@ -67,7 +70,12 @@ const Trending = ({ posts }: { posts: any[] }) => {
     <FlatList
       data={posts}
       renderItem={({ item }) => (
-        <TrendingItem activeItem={activeItem} item={item} />
+        <TrendingItem
+          activeItem={activeItem}
+          item={item}
+          onPlay={() => handlePlay(item.$id)}
+          isPlaying={playingVideoId === item.$id}
+        />
       )}
       keyExtractor={(item) => item.$id}
       horizontal

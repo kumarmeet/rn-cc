@@ -11,8 +11,13 @@ import VideoCard from "@/components/VideoCard";
 
 const Home = () => {
   const [refresh, setRefresh] = useState(false);
-  const { data: posts, isLoading, reFetch } = useAppwrite(getAllPosts);
+  const { data: posts, reFetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
+  const [playingVideoId, setPlayingVideoId] = useState<null | string>(null);
+
+  const handlePlay = (videoId: string) => {
+    setPlayingVideoId(videoId);
+  };
 
   const onRefresh = async () => {
     setRefresh(true);
@@ -67,7 +72,11 @@ const Home = () => {
         }}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => {
-          return <VideoCard video={item} posts={posts} />;
+          return <VideoCard
+            video={item}
+            onPlay={() => handlePlay(item.$id)}
+            isPlaying={playingVideoId === item.$id}
+          />;
         }}
         refreshControl={
           <RefreshControl refreshing={refresh} onRefresh={onRefresh} />

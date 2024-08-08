@@ -3,21 +3,7 @@ import React, { useRef, useState } from 'react'
 import { icons } from '@/constants'
 import { ResizeMode, Video } from 'expo-av'
 
-const VideoCard = ({ video: { $id, title, thumbnail, video, creator: { username, avatar } }, posts }: any) => {
-  const [play, setPlay] = useState(false)
-
-  const playingHandler = (id: string) => {
-    posts.map((d: any) => {
-      if (id === d.$id) {
-        setPlay(true)
-      }
-
-      if (id !== d.$id) {
-        setPlay(false)
-      }
-    })
-  }
-
+const VideoCard = ({ video: { $id: { videoId }, title, thumbnail, video, creator: { username, avatar } }, onPlay, isPlaying }: any) => {
   return (
     <View className="flex-col items-center px-4 mb-14">
       <View className="flex-row items-start gap-3">
@@ -37,7 +23,7 @@ const VideoCard = ({ video: { $id, title, thumbnail, video, creator: { username,
         </View>
       </View>
 
-      {play ?
+      {isPlaying ?
         <Video
           source={{ uri: video }}
           className="w-full h-60 rounded-xl mt-3 bg-white/10"
@@ -48,7 +34,7 @@ const VideoCard = ({ video: { $id, title, thumbnail, video, creator: { username,
         /> :
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => playingHandler($id)}
+          onPress={onPlay}
           className='w-full h-60 rounded-xl mt-3 relative justify-center items-center'>
           <Image source={{ uri: thumbnail }} className='w-full h-full rounded-xl mt-3' />
           <Image source={icons.play} className='w-12 h-12 absolute' resizeMode='contain' />
