@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, RefreshControl } from "react-native";
+import { View, Text, FlatList, Image, RefreshControl, StatusBar } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
@@ -53,12 +53,7 @@ const Home = () => {
                 </View>
               </View>
 
-              <SearchInput
-                placeholder="Search for a video topic"
-                value=""
-                handleChangeText={() => { }}
-                keyboardType="default"
-              />
+              <SearchInput initialQuery="" />
 
               <View className="w-full flex-1 pt-5 pb-8">
                 <Text className="text-gray-100 text-lg font-pregular mb-3">
@@ -90,6 +85,7 @@ const Home = () => {
           );
         }}
       />
+      <StatusBar backgroundColor="#161622" barStyle="light-content" />
     </SafeAreaView>
   );
 };
