@@ -5,19 +5,19 @@ import { images } from "@/constants";
 import SearchInput from "@/components/SearchInput";
 import Trending from "@/components/Trending";
 import EmptyState from "@/components/EmptyState";
-import { getAllPosts } from "@/lib/appwrite";
+import { getAllPosts, getLatestPosts } from "@/lib/appwrite";
 import { useAppwrite } from "@/hooks/useAppwrite";
+import VideoCard from "@/components/VideoCard";
 
 const Home = () => {
   const [refresh, setRefresh] = useState(false);
   const { data: posts, isLoading, reFetch } = useAppwrite(getAllPosts);
+  const { data: latestPosts } = useAppwrite(getLatestPosts);
 
   const onRefresh = async () => {
     setRefresh(true);
 
     await reFetch();
-
-    console.log(await reFetch());
 
     setRefresh(false);
   };
@@ -26,21 +26,6 @@ const Home = () => {
     <SafeAreaView className="bg-primary h-full">
       <FlatList
         data={posts}
-        keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => {
-          return <Text className="text-3xl text-white">{item.$id}</Text>;
-        }}
-        refreshControl={
-          <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
-        }
-        ListEmptyComponent={() => {
-          return (
-            <EmptyState
-              title="No Video Found"
-              subtitle="Be the first one to upload a video!"
-            />
-          );
-        }}
         ListHeaderComponent={() => {
           return (
             <View className="my-6 px-4 space-y-6">
@@ -66,7 +51,7 @@ const Home = () => {
               <SearchInput
                 placeholder="Search for a video topic"
                 value=""
-                handleChangeText={() => {}}
+                handleChangeText={() => { }}
                 keyboardType="default"
               />
 
@@ -75,9 +60,24 @@ const Home = () => {
                   Latest Videos
                 </Text>
 
-                <Trending posts={posts} />
+                <Trending posts={latestPosts} />
               </View>
             </View>
+          );
+        }}
+        keyExtractor={(item) => item.$id}
+        renderItem={({ item }) => {
+          return <VideoCard video={item} posts={posts} />;
+        }}
+        refreshControl={
+          <RefreshControl refreshing={refresh} onRefresh={onRefresh} />
+        }
+        ListEmptyComponent={() => {
+          return (
+            <EmptyState
+              title="No Video Found"
+              subtitle="Be the first one to upload a video!"
+            />
           );
         }}
       />

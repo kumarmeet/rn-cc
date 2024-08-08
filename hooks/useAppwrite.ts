@@ -22,7 +22,7 @@ export const useAppwrite = (fn: () => any) => {
     fetchData();
   }, [setIsLoading, setData]);
 
-  const reFetch = async () => await fetchData();
+  const reFetch = () => fetchData();
 
   return {
     data,
