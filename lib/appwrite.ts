@@ -236,7 +236,7 @@ class AppWrite implements IAppWrite {
   }
 
   // Get video posts created by user
-  async getUserPosts(userId: QueryTypes) {
+  async getUserPosts(userId: string) {
     try {
       const posts = await this.databases.listDocuments(
         appwriteConfig.databaseId,

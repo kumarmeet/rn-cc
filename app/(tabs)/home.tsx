@@ -1,5 +1,5 @@
 import { View, Text, FlatList, Image, RefreshControl, StatusBar } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "@/constants";
 import SearchInput from "@/components/SearchInput";
@@ -8,8 +8,10 @@ import EmptyState from "@/components/EmptyState";
 import { getAllPosts, getLatestPosts } from "@/lib/appwrite";
 import { useAppwrite } from "@/hooks/useAppwrite";
 import VideoCard from "@/components/VideoCard";
+import { useGlobalContext } from "@/context/global-provider";
 
 const Home = () => {
+  const { user } = useGlobalContext()
   const [refresh, setRefresh] = useState(false);
   const { data: posts, reFetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
@@ -40,7 +42,7 @@ const Home = () => {
                     Welcome Back
                   </Text>
                   <Text className="text-2xl font-psemibold text-white">
-                    React Native
+                    {user?.username}
                   </Text>
                 </View>
 

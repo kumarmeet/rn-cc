@@ -4,8 +4,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 interface GlobalContextType {
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-  user: Object | null;
-  setUser: React.Dispatch<React.SetStateAction<Object>>;
+  user: any;
+  setUser: any;
   isLoading: boolean;
 }
 
@@ -28,7 +28,7 @@ const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =
     getCurrentUser()
       .then((res) => {
         if (res) {
-          console.log(res)
+          console.log("---GlobalProvider---", res)
           setIsLoggedIn(true);
           setUser(res);
         } else {

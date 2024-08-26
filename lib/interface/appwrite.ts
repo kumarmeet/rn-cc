@@ -25,7 +25,7 @@ export interface IAppWrite {
   getFilePreview: (fileId: string, type: TMediaType) => Promise<URL>;
   createVideoPost: (form: IForm) => Promise<Models.Document>;
   getAllPosts: () => Promise<Models.Document[]>;
-  getUserPosts: (userId: QueryTypes) => Promise<Models.Document[]>;
+  getUserPosts: (userId: string) => Promise<Models.Document[]>;
   searchPosts: (query: string) => Promise<Models.Document[]>;
   getLatestPosts: () => Promise<Models.Document[]>;
 }

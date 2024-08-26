@@ -1,9 +1,8 @@
 import { View, Text, Image } from 'react-native'
-import React from 'react'
-import { Tabs } from 'expo-router'
 
 import { ITabIcon } from './interface/tabs'
 import { icons } from '@/constants'
+import { Tabs } from 'expo-router'
 
 
 

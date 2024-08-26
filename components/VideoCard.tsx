@@ -3,7 +3,8 @@ import React, { useRef, useState } from 'react'
 import { icons } from '@/constants'
 import { ResizeMode, Video } from 'expo-av'
 
-const VideoCard = ({ video: { $id: { videoId }, title, thumbnail, video, creator: { username, avatar } }, onPlay, isPlaying }: any) => {
+const VideoCard = ({ video: { $id, title, thumbnail, video, creator: { username, avatar } }, onPlay, isPlaying }: any) => {
+
   return (
     <View className="flex-col items-center px-4 mb-14">
       <View className="flex-row items-start gap-3">

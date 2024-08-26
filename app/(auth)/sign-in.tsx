@@ -7,8 +7,10 @@ import CustomButton from '@/components/CustomButton'
 import { Link, router } from 'expo-router'
 import { TFormData } from '@/components/interface/props'
 import { getCurrentUser, signIn } from '@/lib/appwrite'
+import { useGlobalContext } from '@/context/global-provider'
 
 const SignIn = () => {
+  const { setUser, setIsLoggedIn } = useGlobalContext()
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<TFormData>({
     email: "",
@@ -27,9 +29,9 @@ const SignIn = () => {
     try {
       await signIn(form);
       const result = await getCurrentUser();
-      console.log(result)
-      // setUser(result);
-      // setIsLogged(true);
+      // console.log(result)
+      setUser(result);
+      setIsLoggedIn(true);
 
       Alert.alert("Success", "User signed in successfully");
       router.replace("/home");
@@ -38,8 +40,6 @@ const SignIn = () => {
     } finally {
       setSubmitting(false);
     }
-
-    console.log(form)
   }
 
   return (
